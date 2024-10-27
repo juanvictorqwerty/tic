@@ -40,23 +40,23 @@ def intro(DIMENSIONS: int)-> tuple[str]:
     print("|BIENVENUE AU JEU DU TIC TAC TOE|", sep="  ")
     print('*'*33)
     print("\n")
-    
+
     time.sleep(3)
     nom1 = input("Entrer le nom du premier joueur\n")
     nom2 = input("Entrer le nom du deuxième joueur\n")
-    
+
     print(nom1, " , ", nom2, "Voici le tableau de jeux   ")
     tableau(DIMENSIONS, TABLE_DATA)
-    
+
     time.sleep(2)
     print("Le joueur", nom1," auras les 'X' et le joueur ", nom2," auras les 'O'")
     time.sleep(1)
-    
+
     print("Les règles sont simples.")
     time.sleep(1)
     print("Vous choisissez un numero de case à remplacer avec votre signe")
     time.sleep(1)
-    
+
     print("Pret ????? ")
     time.sleep(1)
     print("Que le meilleur gagne")
@@ -67,36 +67,40 @@ def intro(DIMENSIONS: int)-> tuple[str]:
 def winner_if(DIMENSIONS:int, nom1:str, nom2: str):
     combinaisons_gagnantes = []
     x = 0
-    for y in range(DIMENSIONS, DIMENSIONS**2+1, DIMENSIONS):
+
+    # Check rows
+    for y in range(DIMENSIONS, DIMENSIONS**2 + 1, DIMENSIONS):
         combinaisons_gagnantes.append(TABLE_DATA[x:y])
         x = y
 
-    combo1 = []
+    # Check columns
     for r in range(DIMENSIONS):
+        combo1 = []
         for j in range(r, len(TABLE_DATA), DIMENSIONS):
             combo1.append(TABLE_DATA[j])
         combinaisons_gagnantes.append(combo1)
-        
+
+    # Check main diagonal
     combo2 = []
     for i in range(DIMENSIONS):
-        combo2.append(TABLE_DATA[(DIMENSIONS+1)*i])
-        combinaisons_gagnantes.append(combo2)
-        
+        combo2.append(TABLE_DATA[(DIMENSIONS + 1) * i])
+    combinaisons_gagnantes.append(combo2)
+
+    # Check anti-diagonal
     combo3 = []
-    for i in range(1, DIMENSIONS):
-        combo3.append(TABLE_DATA[(DIMENSIONS-1)*1])
-        combinaisons_gagnantes.append(combo2)
-    
-        
+    for i in range(1, DIMENSIONS + 1):
+        combo3.append(TABLE_DATA[(DIMENSIONS - 1) * i])
+    combinaisons_gagnantes.append(combo3)
+
+    # Check for a winner
     for combo in combinaisons_gagnantes:
-        if all(x == combo[0] for x in combo):
+        if all(x == combo[0] for x in combo) and combo[0] in ['X', 'O']:
             if combo[0] == 'X':
                 print("Le gagnant est ", nom1)
-                return 0
             else:
                 print("Le gagnant est ", nom2)
-                return 0
-
+            return 0
+    return None
 
 
 res = []
