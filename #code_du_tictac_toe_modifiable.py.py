@@ -129,6 +129,19 @@ def game_launch(nom1:str, nom2:str, DIMENSIONS: int):
 
 
 def main():
-    nom1, nom2 = intro(DIMENSIONS)
-    game_launch(nom1, nom2, DIMENSIONS)
+    while True:  # Loop for multiple matches
+        nom1, nom2 = intro(DIMENSIONS)
+        game_launch(nom1, nom2, DIMENSIONS)
+
+        # Ask if players want to play again
+        replay = input("Voulez-vous jouer à nouveau? (o/n): ").strip().lower()
+        if replay != 'o':
+            print("Merci d'avoir joué!")
+            break
+
+        # Reset the game state for a new match
+        global TABLE_DATA, res
+        TABLE_DATA = [str(i + 1) for i in range(DIMENSIONS**2)]
+        res = []
+
 main()
